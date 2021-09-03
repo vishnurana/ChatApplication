@@ -4,6 +4,7 @@ import java.util.Optional;
 
 public class Message {
 
+    private String command;
     private long from;
     private long to;
     private boolean isGroupChat;
@@ -15,18 +16,24 @@ public class Message {
         }
         String[] messageInfo = message.split("|");
         Optional.ofNullable(messageInfo).filter(info -> info.length == 4).ifPresent(info -> {
-            from = Long.parseLong(info[0]);
-            to = Long.parseLong(info[1]);
-            isGroupChat = Boolean.getBoolean(info[2]);
-            Message.this.message = info[3];
+            command = info[0];
+            from = Long.parseLong(info[1]);
+            to = Long.parseLong(info[2]);
+            isGroupChat = Boolean.getBoolean(info[3]);
+            Message.this.message = info[4];
         });
     }
 
-    public Message(long from, long to, boolean isGroupChat, String message) {
+    public Message(String command, long from, long to, boolean isGroupChat, String message) {
+        this.command = command;
         this.from = from;
         this.to = to;
         this.isGroupChat = isGroupChat;
         this.message = message;
+    }
+
+    public String getCommand() {
+        return command;
     }
 
     public long getFrom() {
@@ -47,6 +54,6 @@ public class Message {
 
     @Override
     public String toString() {
-        return String.format("%s|%s|%s|%s", from, to, isGroupChat, message);
+        return String.format("%s|%s|%s|%s|%s", command, from, to, isGroupChat, message);
     }
 }

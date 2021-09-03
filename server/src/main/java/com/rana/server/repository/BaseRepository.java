@@ -20,4 +20,8 @@ public class BaseRepository<T extends BasicEntity> {
         entries.remove(id);
     }
 
+    public boolean contains(long id) {
+        return entries.containsKey(id);
+    }
+
 }
